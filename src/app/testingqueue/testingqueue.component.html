@@ -6,6 +6,9 @@
             <th *ngFor="let heading of headings; let i = index" >
               {{ heading }}
             </th>
+            <th>
+              Done
+            </th>
           </tr>
         </thead>
     
@@ -13,13 +16,42 @@
           
           <tr *ngFor="let row of workers; let i = index">
             <td>{{ row.name }}</td>
-            <td>{{ row.timeLeft }}</td>
+            <td>{{ row.timeLeft }} seconds</td>
             <td>{{ row.workStatus }}</td>
             <td>{{ row.completed }}</td>
+            
+            <td>
+              <button type="button" class="btn btn-outline-dark" (click)="testingCompleted(i)" [disabled]="testingUserStatus[i]">Testing Completed</button>
+            </td>
           </tr>
     
         </tbody>
     
     </table>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-3">
+      <input type="text" class="form-control" placeholder="name" aria-label="name" [(ngModel)]="name">
+    </div>
+    <div class="col-sm-3">
+      <select class="form-select" id="selectedtimer" [(ngModel)]="selectedTimeOption">
+        <option value="select" disabled selected>Select</option>
+        <option value="5min">5 Min</option>
+        <option value="10min">10 Min</option>
+        <option value="15min">15 Min</option>
+        <option value="30min">30 Min</option>
+        <option value="60min">60 Min</option>
+        <option value="4hour">4 Hours</option>
+        <option value="6hour">6 Hours</option>
+        <!-- Add more options as needed -->
+      </select>
+    </div>
+    <div class="col-sm-3">
+      <button type="button" class="btn btn-outline-dark" (click)="addUser()">Add Me</button>
+    </div>
+    <div class="col-sm-3">
+      
+    </div>
   </div>
   
