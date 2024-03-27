@@ -21,7 +21,7 @@
             <td>{{ row.completed }}</td>
             
             <td>
-              <button type="button" class="btn btn-outline-dark" (click)="testingCompleted(i)" [disabled]="testingUserStatus[i]">Testing Completed</button>
+              <button type="button" class="btn btn-outline-dark" (click)="testingCompleted(i)" [disabled]="disableTestingCompletedButton[i]">Testing Completed</button>
             </td>
           </tr>
     
@@ -48,7 +48,7 @@
       </select>
     </div>
     <div class="col-sm-3">
-      <button type="button" class="btn btn-outline-dark" (click)="addUser()">Add Me</button>
+      <button type="button" class="btn btn-outline-dark" (click)="addTestingUser()">Add Me</button>
     </div>
     <div class="col-sm-3">
       

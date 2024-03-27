@@ -21,25 +21,17 @@ export class TestingqueueComponent {
   selectedTimeOption: string = "select";
   userActive: boolean = false;
   timeRunningForUser: boolean = false;
-  //testingUserStatus: boolean[] = [];
+  //disableTestingCompletedButton: boolean[] = [];
 
-  testingUserStatus: boolean[] = [];
+  disableTestingCompletedButton: boolean[] = [];
 
   constructor(public testingQueueService: TestingqueueService) {
     //this.testingQueueService.startTimer();
   }
   ngOnInit() {
-    this.testingUserStatus = Array(1000).fill(false);
-    this.testingUserStatus[0] = true;
+    this.disableTestingCompletedButton = Array(1000).fill(true);
+    //this.disableTestingCompletedButton[0] = true;
   }
-
-  addTestingUser() {
-    if (this.testingUserName.trim() !== '') {
-      //this.testingQueueService.addTestingUser(this.testingUserName);
-      this.testingUserName = '';
-    }
-  }
-
 
   headings = ['Name', 'Time Left', 'Work Status', 'Completed']
 
@@ -63,16 +55,19 @@ export class TestingqueueComponent {
   testingCompleted(index: number){
     console.log('Testing completed for '+this.workers[index].name);
 
-    this.testingUserStatus[index] = true;
+    this.disableTestingCompletedButton[index] = true;
     this.workers[index].workStatus = 'Completed';
     this.workers[index].completed = true;
 
-    if((this.workers.length > index+1) && (this.testingUserStatus[index + 1] == false)){
+    this.timeRunningForUser = false;
+
+    if((this.workers.length > index+1) && (this.workers[index + 1].completed == false)){
+      this.disableTestingCompletedButton[index+1] = false;
       this.startAsyncTimeoutCall(index+1, this.workers[index+1].timeLeft);
     }
   }
 
-  addUser(){
+  addTestingUser(){
     console.log("Adding "+this.name+ "for time: "+this.selectedTimeOption);
     
     const selectedTime = this.getSelectedTime(this.selectedTimeOption)*60;
@@ -83,7 +78,7 @@ export class TestingqueueComponent {
     let currActive = false;
 
     for(let i=0; i<this.workers.length; i++){
-      if(this.testingUserStatus[i]){
+      if(this.disableTestingCompletedButton[i]){
         currActive = true;
         break;
       }
@@ -92,6 +87,7 @@ export class TestingqueueComponent {
 
     if(!this.timeRunningForUser){
       this.startAsyncTimeoutCall(this.workers.length-1, selectedTime);
+      this.disableTestingCompletedButton[this.workers.length-1] = false;
     }
     
     this.name = '';
@@ -137,7 +133,7 @@ export class TestingqueueComponent {
       this.workers[userIndex].timeLeft = i;
       console.log('Time passed: '+i);
       await this.delay(1000); // Wait for 1 second
-      if(this.testingUserStatus[userIndex]){
+      if(this.disableTestingCompletedButton[userIndex]){
         console.log('Testing done!!');
         break;
       }
@@ -146,13 +142,12 @@ export class TestingqueueComponent {
 
     this.timeRunningForUser = true;
 
-
-    while(!this.testingUserStatus[userIndex]){
+    while(!this.workers[userIndex].completed){
       this.workers[userIndex].timeLeft -= 1;
       await this.delay(1000); // Wait for 1 second
     }
+    console.log('Stopped');
 
-    this.timeRunningForUser = false;
 
     if(this.workers[userIndex].timeLeft > 0){
       console.log('Wow, completed on time!');
