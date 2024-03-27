@@ -18,6 +18,9 @@ import { FormsModule } from '@angular/forms';
 export class TestingqueueComponent {
   testingUserName: string = '';
   name: string = '';
+  testingDescriptionInput: string = '';
+
+
   selectedTimeOption: string = "select";
   userActive: boolean = false;
   timeRunningForUser: boolean = false;
@@ -33,7 +36,7 @@ export class TestingqueueComponent {
     //this.disableTestingCompletedButton[0] = true;
   }
 
-  headings = ['Name', 'Estimated Time', 'Time Left', 'Work Status', 'Completed', 'TAT']
+  headings = ['Name', 'Estimated Time', 'Time Left', 'Testing Description', 'Completed', 'TAT']
 
   
 
@@ -41,7 +44,7 @@ export class TestingqueueComponent {
     name: string,
     estimatedTime: number,
     timeLeft: number,
-    workStatus: string,
+    testingDescription: string,
     completed: boolean,
     tat: number,
   }[] = [
@@ -49,7 +52,7 @@ export class TestingqueueComponent {
       name: 'A R Danish',
       estimatedTime: 0,
       timeLeft: 0,
-      workStatus: 'Completed',
+      testingDescription: 'Bug 1 to work',
       completed: true,
       tat: 0,
     },
@@ -60,7 +63,6 @@ export class TestingqueueComponent {
     console.log('Testing completed for '+this.workers[index].name);
 
     this.disableTestingCompletedButton[index] = true;
-    this.workers[index].workStatus = 'Completed';
     this.workers[index].completed = true;
 
     this.workers[index].tat = this.workers[index].estimatedTime - this.workers[index].timeLeft;
@@ -74,30 +76,39 @@ export class TestingqueueComponent {
   }
 
   addTestingUser(){
-    console.log("Adding "+this.name+ "for time: "+this.selectedTimeOption);
     
-    const selectedTime = this.getSelectedTime(this.selectedTimeOption)*60;
+    if((this.name != '') && (this.name.length > 2) && (this.testingDescriptionInput != '') && (this.testingDescriptionInput.length > 5) && (this.selectedTimeOption != "select")){
 
-    this.workers.push({name: this.name, estimatedTime:selectedTime, timeLeft: selectedTime, workStatus: 'Pending', completed: false, tat: 0});
+      console.log("Adding "+this.name+ "for time: "+this.selectedTimeOption);
+      
+      const selectedTime = this.getSelectedTime(this.selectedTimeOption)*60;
 
-    /*
-    let currActive = false;
+      this.workers.push({name: this.name, estimatedTime:selectedTime, timeLeft: selectedTime, testingDescription: this.testingDescriptionInput, completed: false, tat: 0});
 
-    for(let i=0; i<this.workers.length; i++){
-      if(this.disableTestingCompletedButton[i]){
-        currActive = true;
-        break;
+      /*
+      let currActive = false;
+
+      for(let i=0; i<this.workers.length; i++){
+        if(this.disableTestingCompletedButton[i]){
+          currActive = true;
+          break;
+        }
       }
-    }
-    */
+      */
 
-    if(!this.timeRunningForUser){
-      this.startAsyncTimeoutCall(this.workers.length-1, selectedTime);
-      this.disableTestingCompletedButton[this.workers.length-1] = false;
+      if(!this.timeRunningForUser){
+        this.startAsyncTimeoutCall(this.workers.length-1, selectedTime);
+        this.disableTestingCompletedButton[this.workers.length-1] = false;
+      }
+      
+      this.name = '';
+      this.selectedTimeOption="select";
+
+    }else{
+      console.log('Please enter correct details');
+      // TODO - Add error message as required
     }
-    
-    this.name = '';
-    this.selectedTimeOption="select";
+
   }
 
 

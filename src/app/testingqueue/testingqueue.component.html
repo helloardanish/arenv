@@ -18,7 +18,7 @@
             <td>{{ row.name }}</td>
             <td>{{ row.estimatedTime }} seconds</td>
             <td>{{ row.timeLeft }} seconds</td>
-            <td>{{ row.workStatus }}</td>
+            <td>{{ row.testingDescription }}</td>
             <td>{{ row.completed }}</td>
             <td>{{ row.tat }} seconds</td>
             
@@ -37,6 +37,10 @@
       <input type="text" class="form-control" placeholder="name" aria-label="name" [(ngModel)]="name">
     </div>
     <div class="col-sm-3">
+      <input type="text" class="form-control" placeholder="description" aria-label="name" [(ngModel)]="testingDescriptionInput">
+    </div>
+
+    <div class="col-sm-3">
       <select class="form-select" id="selectedtimer" [(ngModel)]="selectedTimeOption">
         <option value="select" disabled selected>Select</option>
         <option value="5min">5 Min</option>
@@ -52,8 +56,6 @@
     <div class="col-sm-3">
       <button type="button" class="btn btn-outline-dark" (click)="addTestingUser()">Add Me</button>
     </div>
-    <div class="col-sm-3">
-      
-    </div>
+    
   </div>
   
