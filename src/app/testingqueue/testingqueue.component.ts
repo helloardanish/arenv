@@ -34,6 +34,22 @@ export class TestingqueueComponent {
   ngOnInit() {
     this.disableTestingCompletedButton = Array(1000).fill(true);
     //this.disableTestingCompletedButton[0] = true;
+
+    /*
+    window.onbeforeunload = () => {
+      this.displayAlert();
+      return this.confirmReload();
+    };
+    */
+
+
+    window.addEventListener('beforeunload', (event) => {
+      // Cancel the event as returning a string will not show a confirmation dialog in all browsers
+      event.preventDefault();
+      // Show an alert dialog
+      this.displayAlert();
+    });
+
   }
 
   headings = ['Name', 'Estimated Time', 'Time Left', 'Testing Description', 'Completed', 'TAT']
@@ -69,6 +85,28 @@ export class TestingqueueComponent {
         event.preventDefault();
     }
   }
+
+
+  confirmReload() {
+    console.log('Reload prevent check');
+    return 'Are you sure you want to reload?';
+  }
+
+  displayAlert() {
+    window.alert('Attempting to reload the page.');
+    //window.close();
+  }
+  
+
+/*
+  @HostListener('window:beforeunload', ['$event'])
+  confirmReload(event: Event) {
+    // Display a confirmation dialog
+    const confirmationMessage = 'Are you sure you want to reload?';
+    //(event as any).returnValue = confirmationMessage; // For older browsers
+    return confirmationMessage; // For modern browsers
+  }
+  */
 
 
   testingCompleted(index: number){
@@ -128,6 +166,12 @@ export class TestingqueueComponent {
   getSelectedTime(option: string): number{
     let number = 0;
     switch(this.selectedTimeOption){
+      case "1min":
+        number = 1
+        break;
+      case "2min":
+        number = 2
+        break;
       case "5min":
         number = 5
         break;
