@@ -1,0 +1,25 @@
+<div class="table-container">
+    <table class="table table-bordered table-hover">
+        
+        <thead class="thead-dark">
+          <tr>
+            <th *ngFor="let heading of headings; let i = index" >
+              {{ heading }}
+            </th>
+          </tr>
+        </thead>
+    
+        <tbody>
+          
+          <tr *ngFor="let row of workers; let i = index">
+            <td>{{ row.name }}</td>
+            <td>{{ row.timeLeft }}</td>
+            <td>{{ row.workStatus }}</td>
+            <td>{{ row.completed }}</td>
+          </tr>
+    
+        </tbody>
+    
+    </table>
+  </div>
+  
