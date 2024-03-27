@@ -102,6 +102,7 @@ export class TestingqueueComponent {
       }
       
       this.name = '';
+      this.testingDescriptionInput = '';
       this.selectedTimeOption="select";
 
     }else{
