@@ -16,7 +16,7 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './testingqueue.component.css'
 })
 export class TestingqueueComponent {
-  workerName: string = '';
+  testingUserName: string = '';
   name: string = '';
   selectedTimeOption: string = "select";
   userActive: boolean = false;
@@ -33,10 +33,10 @@ export class TestingqueueComponent {
     this.testingUserStatus[0] = true;
   }
 
-  addWorker() {
-    if (this.workerName.trim() !== '') {
-      //this.testingQueueService.addWorker(this.workerName);
-      this.workerName = '';
+  addTestingUser() {
+    if (this.testingUserName.trim() !== '') {
+      //this.testingQueueService.addTestingUser(this.testingUserName);
+      this.testingUserName = '';
     }
   }
 
@@ -75,7 +75,7 @@ export class TestingqueueComponent {
   addUser(){
     console.log("Adding "+this.name+ "for time: "+this.selectedTimeOption);
     
-    const selectedTime = this.getSelectedTime(this.selectedTimeOption);
+    const selectedTime = this.getSelectedTime(this.selectedTimeOption)*60;
 
     this.workers.push({name: this.name, timeLeft: selectedTime, workStatus: 'Pending', completed: false});
 
