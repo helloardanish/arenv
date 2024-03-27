@@ -33,21 +33,25 @@ export class TestingqueueComponent {
     //this.disableTestingCompletedButton[0] = true;
   }
 
-  headings = ['Name', 'Time Left', 'Work Status', 'Completed']
+  headings = ['Name', 'Estimated Time', 'Time Left', 'Work Status', 'Completed', 'TAT']
 
   
 
   workers: {
     name: string,
+    estimatedTime: number,
     timeLeft: number,
     workStatus: string,
     completed: boolean,
+    tat: number,
   }[] = [
     {
       name: 'A R Danish',
+      estimatedTime: 0,
       timeLeft: 0,
       workStatus: 'Completed',
       completed: true,
+      tat: 0,
     },
   ]
 
@@ -58,6 +62,8 @@ export class TestingqueueComponent {
     this.disableTestingCompletedButton[index] = true;
     this.workers[index].workStatus = 'Completed';
     this.workers[index].completed = true;
+
+    this.workers[index].tat = this.workers[index].estimatedTime - this.workers[index].timeLeft;
 
     this.timeRunningForUser = false;
 
@@ -72,7 +78,7 @@ export class TestingqueueComponent {
     
     const selectedTime = this.getSelectedTime(this.selectedTimeOption)*60;
 
-    this.workers.push({name: this.name, timeLeft: selectedTime, workStatus: 'Pending', completed: false});
+    this.workers.push({name: this.name, estimatedTime:selectedTime, timeLeft: selectedTime, workStatus: 'Pending', completed: false, tat: 0});
 
     /*
     let currActive = false;

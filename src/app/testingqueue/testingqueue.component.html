@@ -16,9 +16,11 @@
           
           <tr *ngFor="let row of workers; let i = index">
             <td>{{ row.name }}</td>
+            <td>{{ row.estimatedTime }} seconds</td>
             <td>{{ row.timeLeft }} seconds</td>
             <td>{{ row.workStatus }}</td>
             <td>{{ row.completed }}</td>
+            <td>{{ row.tat }} seconds</td>
             
             <td>
               <button type="button" class="btn btn-outline-dark" (click)="testingCompleted(i)" [disabled]="disableTestingCompletedButton[i]">Testing Completed</button>
