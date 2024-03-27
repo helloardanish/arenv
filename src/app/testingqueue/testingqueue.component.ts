@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { TestingqueueService } from '../testingqueue.service';
 import { NgFor, NgIf } from '@angular/common';
 import { Timestamp } from 'rxjs';
@@ -57,6 +57,18 @@ export class TestingqueueComponent {
       tat: 0,
     },
   ]
+
+
+
+  @HostListener('document:keydown', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) { 
+    // Check if Ctrl+R (or Cmd+R on Mac) is pressed
+    if ((event.ctrlKey || event.metaKey) && event.keyCode === 82) {
+        // Prevent default action (reloading the page)
+        console.log('Prevented reload');
+        event.preventDefault();
+    }
+  }
 
 
   testingCompleted(index: number){
