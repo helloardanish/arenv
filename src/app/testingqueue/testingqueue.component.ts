@@ -42,13 +42,16 @@ export class TestingqueueComponent {
     };
     */
 
-
+/*
     window.addEventListener('beforeunload', (event) => {
       // Cancel the event as returning a string will not show a confirmation dialog in all browsers
       event.preventDefault();
       // Show an alert dialog
       this.displayAlert();
     });
+
+    */
+
 
   }
 

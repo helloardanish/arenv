@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "ar-app-data-12e87": {
+      "hosting": {
+        "arenv": [
+          "helloarenv"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "ar-app-data-12e87"
+  }
+}
